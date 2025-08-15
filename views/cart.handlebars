@@ -1,0 +1,63 @@
+<div class="container">
+    <h1>Carrito de Compras</h1>
+    
+    {{#if cart.products.length}}
+        <div class="cart-items">
+            {{#each cart.products}}
+            <div class="cart-item">
+                <div class="product-info">
+                    <h3>{{product.title}}</h3>
+                    <p>{{product.description}}</p>
+                    <p><strong>Precio unitario:</strong> ${{product.price}}</p>
+                    <p><strong>Categoría:</strong> {{product.category}}</p>
+                </div>
+                <div class="quantity-info">
+                    <p><strong>Cantidad:</strong> {{quantity}}</p>
+                    <p><strong>Subtotal:</strong> ${{multiply product.price quantity}}</p>
+                    <button onclick="removeFromCart('{{../cart._id}}', '{{product._id}}')">Eliminar</button>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        
+        <div class="cart-total">
+            <h3>Total: ${{calculateTotal cart.products}}</h3>
+            <button onclick="clearCart('{{cart._id}}')">Vaciar carrito</button>
+        </div>
+    {{else}}
+        <p>El carrito está vacío.</p>
+        <a href="/products">Ver productos</a>
+    {{/if}}
+</div>
+
+<script>
+function removeFromCart(cartId, productId) {
+    fetch(`/api/carts/${cartId}/products/${productId}`, {
+        method: 'DELETE'
+    })
+    .then(() => location.reload())
+    .catch(err => console.error('Error:', err));
+}
+
+function clearCart(cartId) {
+    fetch(`/api/carts/${cartId}`, {
+        method: 'DELETE'
+    })
+    .then(() => location.reload())
+    .catch(err => console.error('Error:', err));
+}
+</script>
+
+<style>
+.container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.cart-items { margin-bottom: 30px; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; background: white; }
+.product-info { flex: 1; }
+.product-info h3 { margin-top: 0; color: #333; }
+.quantity-info { text-align: right; }
+.quantity-info button { background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 3px; cursor: pointer; }
+.quantity-info button:hover { background: #c82333; }
+.cart-total { text-align: center; padding: 20px; background: #f8f9fa; border-radius: 5px; }
+.cart-total button { background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 3px; cursor: pointer; margin-left: 15px; }
+.cart-total button:hover { background: #5a6268; }
+</style>

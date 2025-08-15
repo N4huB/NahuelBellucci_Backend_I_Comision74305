@@ -1,17 +1,24 @@
 {
   "name": "nahuelbellucci_backend_i_comision74305",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.1",
+    "mongoose": "^8.17.1",
     "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
